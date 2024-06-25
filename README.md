@@ -56,8 +56,9 @@ contract Smart {
 
 To compile the code, click on the "Solidity Compiler" tab in the left-hand sidebar. Make sure the "Compiler" option is set to "0.8.4" (or another compatible version), and then click on the "Compile HelloWorld.sol" button.
 
-Once the code is compiled, you can deploy the contract by clicking on the "Deploy & Run Transactions" tab in the left-hand sidebar. After that go to the bottom at deployed contracts  and cilck on side arrow with Smart contract. Here, we have to set the value of num by using require statement and get that num. Also to check assert statement we used multiply function 
-Then after that revert the statement by reset value function.
+Once the code is compiled, you can deploy the contract by clicking on the "Deploy & Run Transactions" tab in the left-hand sidebar. After that go to the bottom at deployed contracts  and cilck on side arrow with Smart contract. Here, we have to set the value of num by using 'require' statement and get that num. Also, to check 'assert' statement we used multiply function.
+
+Then after that 'revert' the statement by reset value function.
 
 Setvalue will set the num.
 Multiplyvalue will update the num.

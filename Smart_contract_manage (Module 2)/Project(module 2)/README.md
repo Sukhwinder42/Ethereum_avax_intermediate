@@ -1,14 +1,16 @@
 # Final ETH-AVAX-PROOF-Intermediate-Module-2
 ![](https://i.imgur.com/veF6Uvs.png)
 
-
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://metacrafterc-scmstarter-m5l1h22gvj0.ws-us114.gitpod.io/)
-
-Click on the Gitpod Button 
+ 
 
 Make sure you already have hardhat and node installed!
 
 Open Three terminals 
+
+In First terminal copy the below command!
+```solidity
+npm i
+```
 
 In Second terminal copy the below command!
 ```solidity

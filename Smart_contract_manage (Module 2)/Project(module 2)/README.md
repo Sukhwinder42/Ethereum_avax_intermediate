@@ -38,7 +38,7 @@ npm run dev
 
 Now the project will run on the port : 3000 , make that public 
 
-![](https://i.imgur.com/uDgzotm.png)
+![](https://3000-metacrafterc-scmstarter-m5l1h22gvj0.ws-us114.gitpod.io/)
 ![](https://i.imgur.com/EvjY5Pp.png)
 
 

@@ -1,5 +1,5 @@
 # Final ETH-AVAX-PROOF-Intermediate-Module-2
-![](https://i.imgur.com/veF6Uvs.png)
+![Screenshot 2024-06-29 140756](https://github.com/Sukhwinder42/Ethereum_avax_intermediate/assets/114457848/152448e1-bb31-4d0d-a904-4c5301664316)
 
  
 
@@ -36,7 +36,7 @@ Now the project will run on the port : 3000 , make that public
 
 ![Screenshot 2024-06-28 234250](https://github.com/Sukhwinder42/Ethereum_avax_intermediate/assets/114457848/798cbc4b-6d44-42ef-93cc-d0f4c324106e)
 
-![](https://i.imgur.com/EvjY5Pp.png)
+![Screenshot 2024-06-29 140756](https://github.com/Sukhwinder42/Ethereum_avax_intermediate/assets/114457848/152448e1-bb31-4d0d-a904-4c5301664316)
 
 
 

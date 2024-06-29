@@ -6,31 +6,31 @@ This program is written in a Solidity which is OOP language used for developing 
 For more information, visit: https://docs.openzeppelin.com/contracts/4.x/erc20
 
 ERC20 has following functions :
-a. TotalSupply: total number of token will be issued
+1. TotalSupply: total number of token will be issued
 
-b. Balanceof : The account balance of a token owner's account
+2. Balanceof : The account balance of a token owner's account
 
-c. Transferfrom: Automatically executes transfers of a specified number of tokens from a specified address using the token
+3. Transferfrom: Automatically executes transfers of a specified number of tokens from a specified address using the token
 
-d. Transfer: Automatically executes transfers of a specified number of tokens to a specified address for transactions using the token
+4. Transfer: Automatically executes transfers of a specified number of tokens to a specified address for transactions using the token
 
-e. Approve: Allows a spender to withdraw a set number of tokens from a specified account, up to a specific amount
+5. Approve: Allows a spender to withdraw a set number of tokens from a specified account, up to a specific amount
 
-f. Transfer: An event triggered when a transfer is successful
+6. Transfer: An event triggered when a transfer is successful
 
-g. Allowance: Returns a set number of tokens from a spender to the owner
+7. Allowance: Returns a set number of tokens from a spender to the owner
 
-h. Approval: approved event
+8. Approval: approved event
 
-i. name : retruns the name of the token
+9. name : retruns the name of the token
 
-j. symbol : returns the symbol of the token
+10. symbol : returns the symbol of the token
 
-k. decimal : returns the decimal conversion of the factor
+11. decimal : returns the decimal conversion of the factor
 
-l. mint : takes a receiving address and amount of type uint to be minted as an argument.
+12. mint : takes a receiving address and amount of type uint to be minted as an argument.
 
-m. burn : takes an amount of tyoe uint tobe burned as an argument and any user can destroy the token even if we can also burn our token
+13. burn : takes an amount of tyoe uint tobe burned as an argument and any user can destroy the token even if we can also burn our token
 
 ## Getting Started
 

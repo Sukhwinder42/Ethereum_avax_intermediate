@@ -1,5 +1,8 @@
+
+// For this project, create a simple contract with 2-3 functions. Then show the values of those functions in frontend of the application. 
+
 // SPDX-License-Identifier: UNLICENSED
-pragma solidity ^0.8.9;
+pragma solidity ^0.8.7;
 
 contract Assessment {
     address payable public owner;
@@ -8,6 +11,8 @@ contract Assessment {
     event Deposit(uint256 amount);
     event Withdraw(uint256 amount);
     event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
+    event BalanceReset(uint256 oldBalance);
+    event BalanceSet(uint256 oldBalance, uint256 newBalance);
 
     constructor(uint initBalance) payable {
         owner = payable(msg.sender);
@@ -49,6 +54,23 @@ contract Assessment {
         require(newOwner != address(0), "New owner is the zero address");
         emit OwnershipTransferred(owner, newOwner);
         owner = newOwner;
+    }
+
+    function getOwner() public view returns (address) {
+        return owner;
+    }
+
+
+    function setBalance(uint256 newBalance) public onlyOwner {
+        uint256 oldBalance = balance;
+        balance = newBalance;
+        emit BalanceSet(oldBalance, newBalance);
+    }
+
+    function resetBalance() public onlyOwner {
+        uint256 oldBalance = balance;
+        balance = 0;
+        emit BalanceReset(oldBalance);
     }
 
 }

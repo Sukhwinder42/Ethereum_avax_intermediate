@@ -1,5 +1,3 @@
-// For this project, create a simple contract with 2-3 functions. Then show the values of those functions in frontend of the application. 
-
 import { useState, useEffect } from "react";
 import { ethers } from "ethers";
 import atm_abi from "../artifacts/contracts/Assessment.sol/Assessment.json";
@@ -11,7 +9,7 @@ export default function HomePage() {
   const [balance, setBalance] = useState(undefined);
   const [owner, setOwner] = useState(undefined);
 
-  const contractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
+  const contractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3"; // Replace with your deployed contract address
   const atmABI = atm_abi.abi;
 
   const getWallet = async () => {
@@ -96,6 +94,33 @@ export default function HomePage() {
     }
   };
 
+  const setNewBalance = async (newBalance) => {
+    if (atm) {
+      try {
+        let tx = await atm.setBalance(newBalance);
+        await tx.wait();
+        getBalance();
+        alert("Balance set to " + newBalance);
+      } catch (error) {
+        console.error("Failed to set balance:", error);
+        alert("An error occurred while setting the balance.");
+      }
+    }
+  };
+
+  const resetBalance = async () => {
+    if (atm) {
+      try {
+        let tx = await atm.resetBalance();
+        await tx.wait();
+        getBalance();
+        alert("Balance reset to zero.");
+      } catch (error) {
+        console.error("Failed to reset balance:", error);
+        alert("An error occurred while resetting the balance.");
+      }
+    }
+  };
 
   const initUser = () => {
     if (!ethWallet) {
@@ -118,6 +143,8 @@ export default function HomePage() {
         <button onClick={withdraw}>Withdraw 1 ETH</button>
         <button onClick={() => transferOwnership(prompt("Enter new owner address:"))}>Transfer Ownership</button>
         <button onClick={getContractOwner}>Get Contract Owner</button>
+        <button onClick={() => setNewBalance(prompt("Enter new balance:"))}>Set New Balance</button>
+        <button onClick={resetBalance}>Reset Balance</button>
         {owner && <p>Contract Owner: {owner}</p>}
       </div>
     );
@@ -129,16 +156,16 @@ export default function HomePage() {
 
   return (
     <main className="container">
-      <header><h1>Welcome to the Metacrafters Project</h1></header>
+      <header><h1>Welcome to Smart Contract Project</h1></header>
       {initUser()}
       <style jsx>{`
         .container {
           text-align: center;
           background: linear-gradient(to right,rgba(0,0,0,0), rgba(0,0,0,0)), 
-                      url(https://th.bing.com/th/id/OIP.wHAOfLa_l9hzabGFnoQ7pQHaE5?w=302&h=200&c=7&o=5&dpr=1.3&pid=1.7);
+                      url(https://th.bing.com/th/id/OIP.QY8Qrvi6b-M_uJSEURu3iAHaEK?w=312&h=200&c=7&o=5&dpr=1.3&pid=1.7);
           background-size: cover;
           background-repeat: no-repeat;
-          color: white;
+          color: black;
           min-height: 100vh;
           display: flex;
           flex-direction: column;
@@ -165,8 +192,8 @@ export default function HomePage() {
         button:hover {
           background-color: #3c4048;
         }
+          
       `}</style>
     </main>
   );
 }
- 

@@ -1,6 +1,5 @@
 # Final ETH-AVAX-PROOF-Intermediate-Module-2
-![Screenshot 2024-06-29 140756](https://github.com/Sukhwinder42/Ethereum_avax_intermediate/assets/114457848/152448e1-bb31-4d0d-a904-4c5301664316)
-
+![Screenshot 2024-06-30 155258](https://github.com/Sukhwinder42/Ethereum_avax_intermediate/assets/114457848/1eba8af1-e131-4382-9720-51e046a35f99)
  
 
 Make sure you already have hardhat and node installed!
@@ -34,9 +33,10 @@ npm run dev
 
 Now the project will run on the port : 3000 , make that public 
 
-![Screenshot 2024-06-28 234250](https://github.com/Sukhwinder42/Ethereum_avax_intermediate/assets/114457848/798cbc4b-6d44-42ef-93cc-d0f4c324106e)
+![Screenshot 2024-06-30 155601](https://github.com/Sukhwinder42/Ethereum_avax_intermediate/assets/114457848/cea2fc49-2bc4-4449-9777-224db2764ec7)
 
-![Screenshot 2024-06-29 140756](https://github.com/Sukhwinder42/Ethereum_avax_intermediate/assets/114457848/152448e1-bb31-4d0d-a904-4c5301664316)
+
+![Screenshot 2024-06-30 155258](https://github.com/Sukhwinder42/Ethereum_avax_intermediate/assets/114457848/1eba8af1-e131-4382-9720-51e046a35f99)
 
 
 

@@ -1,32 +1,65 @@
-// Write a smart contract that implements the require(), assert() and revert() statements.
-// SPDX-License-Identifier:MIT
-pragma solidity >=0.8.7;
+//write a smart contract that implements the require(), assert() and revert() statements.
 
-contract Smart {
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.7;
+
+contract SubscriptionService {
     address public owner;
-    uint256 public num;
+    uint256 public subscriptionFee;
+    mapping(address => bool) public subscribers;
+    uint256 public totalSubscribers;
 
-    constructor() {
-        owner = msg.sender; 
+    event Subscribed(address indexed user);
+    event Unsubscribed(address indexed user);
+    event Withdrawal(uint256 amount);
+
+    constructor(uint256 _subscriptionFee) {
+        owner = msg.sender;
+        subscriptionFee = _subscriptionFee;
+        totalSubscribers = 0;
     }
 
-    function setValue(uint256 _num) public {
-        require(_num > 0, "Value must be positive");
-        num = _num;
+    modifier onlyOwner() {
+        require(msg.sender == owner, "Only owner can call this function");
+        _;
     }
 
-    // Function that demonstrates the use of assert
-    function MultiplyValue() public {
-        num = num * 2;
-        assert(num > 0);
+    function subscribe() public payable {
+        require(msg.value == subscriptionFee, "Incorrect subscription fee");
+        require(!subscribers[msg.sender], "Already subscribed");
+
+        subscribers[msg.sender] = true;
+        totalSubscribers += 1;
+        emit Subscribed(msg.sender);
     }
 
-    function resetValue() public {
-        // Check that the caller is the owner of the contract
-        if (msg.sender != owner) {
-            revert("Caller is not the owner");
+    function unsubscribe() public {
+        require(subscribers[msg.sender], "Not subscribed");
+
+        subscribers[msg.sender] = false;
+        totalSubscribers -= 1;
+        emit Unsubscribed(msg.sender);
+    }
+
+    function checkSubscription(address _user) public view returns (bool) {
+        return subscribers[_user];
+    }
+
+    function withdrawFees() public onlyOwner {
+        uint256 amount = address(this).balance;
+        if (amount == 0) {
+            revert("No funds to withdraw");  //uasge of revert statement
         }
-        num = 0;
+
+        // Use assert to ensure the transfer was successful
+        (bool success, ) = owner.call{value: amount}("");
+        assert(success);
+        
+        emit Withdrawal(amount);
+    }
+
+    function changeSubscriptionFee(uint256 _newFee) public onlyOwner {
+        require(_newFee > 0, "Subscription fee must be greater than 0");
+        subscriptionFee = _newFee;
     }
 }
-

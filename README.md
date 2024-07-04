@@ -1,11 +1,7 @@
 
-# Usage of Require assert and revert 
+# Subscription Service Project
 
-We will create a contract which will store some of the variable's data and mapping the owner to msg.sender with a respective address. This simple contract demonstrates how to use require(), assert(), and revert() to handle various conditions and ensure the correctness and security of your smart contract.
-
-## Description
-
-There is a contract written in Solidity, a programming language used for developing smart contracts on the Ethereum blockchain. We will create a contract to fulfill the following requirements: write a smart contract that implements the require(), assert() and revert() statements. 
+There is a contract written in Solidity, a programming language used for developing smart contracts on the Ethereum blockchain.The SubscriptionService smart contract is designed to manage a subscription-based service using Solidity on the Ethereum blockchain. The contract employs the require(), assert(), and revert() statements to ensure security and proper functioning.
 
 ## Getting Started
 
@@ -16,53 +12,90 @@ To run this program, you can use Remix, an online Solidity IDE. To get started, 
 Once you are on the Remix website, create a new file by clicking on the "+" icon in the left-hand sidebar. Save the file with a .sol extension (e.g., HelloWorld.sol). Copy and paste the following code into the file:
 
 ```javascript
+
 */
-// SPDX-License-Identifier:MIT
-pragma solidity >=0.8.7;
+//write a smart contract that implements the require(), assert() and revert() statements.
 
-contract Smart {
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.7;
+
+contract SubscriptionService {
     address public owner;
-    uint256 public num;
+    uint256 public subscriptionFee;
+    mapping(address => bool) public subscribers;
+    uint256 public totalSubscribers;
 
-    constructor() {
-        owner = msg.sender; 
+    event Subscribed(address indexed user);
+    event Unsubscribed(address indexed user);
+    event Withdrawal(uint256 amount);
+
+    constructor(uint256 _subscriptionFee) {
+        owner = msg.sender;
+        subscriptionFee = _subscriptionFee;
+        totalSubscribers = 0;
     }
 
-    function setValue(uint256 _num) public {
-        require(_num > 0, "Value must be positive");
-        num = _num;
+    modifier onlyOwner() {
+        require(msg.sender == owner, "Only owner can call this function");
+        _;
     }
 
-    // Function that demonstrates the use of assert
-    function MultiplyValue() public {
-        num = num * 2;
-        assert(num > 0);
+    function subscribe() public payable {
+        require(msg.value == subscriptionFee, "Incorrect subscription fee");
+        require(!subscribers[msg.sender], "Already subscribed");
+
+        subscribers[msg.sender] = true;
+        totalSubscribers += 1;
+        emit Subscribed(msg.sender);
     }
 
-    function resetValue() public {
-        // Check that the caller is the owner of the contract
-        if (msg.sender != owner) {
-            revert("Caller is not the owner");
+    function unsubscribe() public {
+        require(subscribers[msg.sender], "Not subscribed");
+
+        subscribers[msg.sender] = false;
+        totalSubscribers -= 1;
+        emit Unsubscribed(msg.sender);
+    }
+
+    function checkSubscription(address _user) public view returns (bool) {
+        return subscribers[_user];
+    }
+
+    function withdrawFees() public onlyOwner {
+        uint256 amount = address(this).balance;
+        if (amount == 0) {
+            revert("No funds to withdraw");  //uasge of revert statement
         }
-        num = 0;
+
+        // Use assert to ensure the transfer was successful
+        (bool success, ) = owner.call{value: amount}("");
+        assert(success);
+        
+        emit Withdrawal(amount);
+    }
+
+    function changeSubscriptionFee(uint256 _newFee) public onlyOwner {
+        require(_newFee > 0, "Subscription fee must be greater than 0");
+        subscriptionFee = _newFee;
     }
 }
 
 
-
-
-
 ```
 
-To compile the code, click on the "Solidity Compiler" tab in the left-hand sidebar. Make sure the "Compiler" option is set to "0.8.4" (or another compatible version), and then click on the "Compile HelloWorld.sol" button.
+To compile the code, click on the "Solidity Compiler" tab in the left-hand sidebar. Make sure the "Compiler" option is set to "0.8.26" (or another compatible version), and then click on the "Compile Subscription.sol" button.
 
-Once the code is compiled, you can deploy the contract by clicking on the "Deploy & Run Transactions" tab in the left-hand sidebar. After that go to the bottom at deployed contracts  and cilck on side arrow with Smart contract. Here, we have to set the value of num by using 'require' statement and get that num. Also, to check 'assert' statement we used multiply function.
+Once the code is compiled, you can deploy the contract by clicking on the "Deploy & Run Transactions" tab in the left-hand sidebar. After that go to the bottom at deployed contracts  and cilck on side arrow with Smart contract. After deploying the SubscriptionService smart contract, the contract owner can set or update the subscription fee, and withdraw susbscription fees. Users can subscribe to the service by paying the specified fee, ensuring they are not already subscribed, and unsubscribe when needed. The subscription status of any address can be checked.
 
-Then after that 'revert' the statement by reset value function.
+There are three methods that constitute the error-handling process in Solidity:
 
-Setvalue will set the num.
-Multiplyvalue will update the num.
-Resetvalue will revert the statement if condition fails.
+(1) require : It is used to validate conditions before proceeding with function execution. It ensures correct subscription fee is paid, user is not already subscribed, user is currently subscribed when unsubscribing, new subscription fee is valid, and only the owner can execute certain functions.
+
+(2) assert : The assert function, like require, is a convenience function that checks for conditions. If a condition fails, then the function execution is terminated with an error message.
+
+(3) revert : Used to halt execution and revert any state changes if an error condition is encountered.
+Stops the transaction when there are no funds to withdraw, preventing further execution.
+
 
 ## Authors
 

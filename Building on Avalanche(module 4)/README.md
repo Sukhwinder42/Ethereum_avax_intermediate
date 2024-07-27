@@ -10,7 +10,7 @@ This token will have the following functionalities in the contract:
  
 2. Burn : Anyone should be able to burn tokens, that they own, that are no longer needed.
    
-3. Transferring : Person should be able to transfer their tokens to others.
+3. TransferRewards : Person should be able to transfer their tokens to others.
  
 4. Reedeming : Person should be able to redeem their tokens for items in the in-game store.
    
@@ -53,8 +53,9 @@ This token will have the following functionalities in the contract:
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
+import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.0.0/contracts/token/ERC20/ERC20.sol";
+import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.0.0/contracts/access/Ownable.sol";
+
 
 contract DegenGamingToken is ERC20, Ownable {
     struct Item {
@@ -65,49 +66,54 @@ contract DegenGamingToken is ERC20, Ownable {
 
     uint256 private nextItemId;
     mapping(uint256 => Item) public items;
+    mapping(address => mapping(uint256 => uint256)) public redeemedItems;
 
     event ItemAdded(uint256 id, string name, uint256 price);
 
-    constructor() ERC20("DegenGamingToken", "DGT") {}
+    constructor() ERC20("Degen", "DGN") {}
 
-    // Minting new tokens, only owner can mint
     function mint(address to, uint256 amount) public onlyOwner {
         _mint(to, amount);
     }
 
-    // Transferring tokens, ERC20 standard function inherited from ERC20
-    // Players can use transfer and transferFrom functions from ERC20
-
-    // Burn tokens, anyone can burn their own tokens
     function burn(uint256 amount) public {
         _burn(msg.sender, amount);
     }
 
-    // Add a new item to the store
     function addItem(string memory name, uint256 price) public onlyOwner {
         items[nextItemId] = Item(nextItemId, name, price);
         emit ItemAdded(nextItemId, name, price);
         nextItemId++;
     }
 
-    // Redeem tokens for in-game items
     function redeem(uint256 itemId) public {
-        Item memory item = items[itemId];
-        require(item.id == itemId, "Item does not exist");
-        require(balanceOf(msg.sender) >= item.price, "Insufficient balance to redeem item");
-
-        _burn(msg.sender, item.price);
-        // Logic to deliver the item to the buyer can be added here
+        uint256 itemPrice = items[itemId].price;
+        require(itemPrice > 0, "Item does not exist");
+        require(balanceOf(msg.sender) >= itemPrice, "Insufficient balance to redeem item");
+        _burn(msg.sender, itemPrice);
+        redeemedItems[msg.sender][itemId]++;
     }
 
-    // View an item's details
-    function getItem(uint256 itemId) public view returns (Item memory) {
-        return items[itemId];
+    function transferRewards(address to, uint256 itemId) public {
+        uint256 redeemedItemCount = redeemedItems[msg.sender][itemId];
+        require(redeemedItemCount > 0, "Insufficient redeemed items to transfer");
+        redeemedItems[msg.sender][itemId]--;
+        redeemedItems[to][itemId]++;
     }
 
-    // Checking token balance, ERC20 standard function inherited from ERC20
-    // Players can use balanceOf function from ERC20
+   function viewRedeemedItems(address account, uint256 itemId) public view returns (string memory itemName, uint256 itemCount) {
+        itemCount = redeemedItems[account][itemId];
+        if (itemCount == 0) {
+            itemName = "No items redeem";
+        } else {
+            itemName = items[itemId].name;
+        }
+        return (itemName, itemCount);
+    }
+
 }
+
+
 
 
 ```

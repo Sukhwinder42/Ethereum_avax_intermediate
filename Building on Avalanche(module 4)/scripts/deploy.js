@@ -1,15 +1,15 @@
 const hre = require("hardhat");
 
 async function main() {
-  // Get the DegenGamingToken smart contract
-  const DegenGamingToken = await hre.ethers.getContractFactory("DegenGamingToken");
+  // Get the DegenToken smart contract
+  const DegenToken = await hre.ethers.getContractFactory("DegenToken");
 
-  // Deploy it
-  const degenGamingToken = await DegenGamingToken.deploy();
-  await degenGamingToken.deployed();
+  // Deploy it without constructor arguments
+  const degenToken = await DegenToken.deploy();
+  await degenToken.deployed();
 
   // Display the contract address
-  console.log(`DegenGamingToken deployed to ${degenGamingToken.address}`);
+  console.log(`DegenToken deployed to ${degenToken.address}`);
 }
 
 // Hardhat recommends this pattern to be able to use async/await everywhere
